@@ -28,6 +28,7 @@ from app.services.relations import fetch_public_relations
 from app.services.legacy_douyin import import_legacy_douyin_output
 from app.core.config import settings
 from app.utils import stable_hash, utcnow
+from app.services.youtube import run_youtube_job
 
 Base.metadata.create_all(engine)
 
@@ -95,6 +96,9 @@ def handle(db, job):
         if not task:
             raise RuntimeError("task not found")
         return run_discovery(db, task, payload.get("limit"))
+
+    if job.job_type == "youtube_collect":
+        return run_youtube_job(db, payload)
 
     content = db.get(Content, payload["content_id"])
     if not content:

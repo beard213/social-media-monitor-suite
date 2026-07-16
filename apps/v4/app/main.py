@@ -8,6 +8,7 @@ from app.db.session import Base, engine
 from app.db import models  # noqa
 from app.api.routes import router
 from app.api.console import router as console_router
+from app.api.youtube import router as youtube_router
 
 Base.metadata.create_all(engine)
 app=FastAPI(title=settings.app_name,version="4.0.0",description="公开内容事件级监测、区域筛选、评论采集、内容线索扩展与多模态检测；短视频搜索接口预留给外部项目方，直播支持按平台与房间ID接入；平台数据须通过授权连接器或 Provider Ingest 接入。")
@@ -20,6 +21,7 @@ async def optional_api_key(request:Request, call_next):
 
 app.include_router(router)
 app.include_router(console_router)
+app.include_router(youtube_router)
 app.mount('/static',StaticFiles(directory='web/static'),name='static')
 @app.get('/',include_in_schema=False)
 def index(): return FileResponse('web/index.html')
