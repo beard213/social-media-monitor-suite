@@ -1,0 +1,87 @@
+# Secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*secret*
+*token*
+*cookies*
+douyin_cookies.txt
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+dist/
+build/
+
+# Runtime data
+run_logs/
+logs/
+*.log
+*.pid
+data/
+storage/
+output/
+tmp/
+temp/
+
+# Databases
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+
+# Live media
+*.flv
+*.flv.part
+*.mp4
+*.m4a
+*.wav
+*.aac
+*.ts
+
+# Models
+*.pt
+*.pth
+*.onnx
+*.safetensors
+*.ckpt
+*.model
+modelscope/
+models_cache/
+.cache/
+
+# Runtime state
+database/biliup_rooms.json
+database/biliup_processed.json
+audit_config.json
+config.toml
+
+# Backups
+*.bak
+*.backup
+*.backup_*
+backup_*/
+manual_backup_*/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

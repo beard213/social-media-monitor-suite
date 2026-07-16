@@ -1,0 +1,73 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: monitor
+      POSTGRES_USER: monitor
+      POSTGRES_PASSWORD: monitor
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U monitor"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  douyin-connector:
+    build: .
+    env_file: .env
+    environment:
+      CONNECTOR_PLATFORM: douyin
+      CONNECTOR_INTERNAL_TOKEN: ${DOUYIN_CONNECTOR_TOKEN:-}
+    command: uvicorn connector_service.main:app --host 0.0.0.0 --port 9001
+
+  kuaishou-connector:
+    build: .
+    env_file: .env
+    environment:
+      CONNECTOR_PLATFORM: kuaishou
+      CONNECTOR_INTERNAL_TOKEN: ${KUAISHOU_CONNECTOR_TOKEN:-}
+    command: uvicorn connector_service.main:app --host 0.0.0.0 --port 9002
+
+  api:
+    build: .
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://monitor:monitor@db:5432/monitor
+      DOUYIN_CONNECTOR_URL: http://douyin-connector:9001
+      KUAISHOU_CONNECTOR_URL: http://kuaishou-connector:9002
+      STORAGE_ROOT: /app/data/storage
+    ports:
+      - "18101:18101"
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      db:
+        condition: service_healthy
+      douyin-connector:
+        condition: service_started
+      kuaishou-connector:
+        condition: service_started
+    command: sh -c "python scripts/bootstrap.py && uvicorn app.main:app --host 0.0.0.0 --port 18101"
+
+  worker:
+    build: .
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://monitor:monitor@db:5432/monitor
+      DOUYIN_CONNECTOR_URL: http://douyin-connector:9001
+      KUAISHOU_CONNECTOR_URL: http://kuaishou-connector:9002
+      STORAGE_ROOT: /app/data/storage
+    volumes:
+      - ./data:/app/data
+    depends_on:
+      db:
+        condition: service_healthy
+      douyin-connector:
+        condition: service_started
+      kuaishou-connector:
+        condition: service_started
+    command: python -m app.worker
+
+volumes:
+  postgres_data:

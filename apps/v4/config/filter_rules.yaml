@@ -1,0 +1,30 @@
+version: 1
+advertising:
+  threshold: 5
+  phrases:
+    免费咨询: 2
+    点击头像: 2
+    私信我: 2
+    加微信: 3
+    微信同号: 3
+    全国接单: 3
+    成功后收费: 3
+    扫码联系: 3
+    律师团队: 1
+  contact_patterns:
+    - '(?<!\d)1[3-9]\d{9}(?!\d)'
+    - '(?:微信|vx|V信)[：: ]*[a-zA-Z][a-zA-Z0-9_-]{5,19}'
+  combinations:
+    - [律师, 免费咨询]
+    - [律师, 私信]
+    - [律师, 全国接单]
+    - [讨薪, 点击头像]
+relevance:
+  default_include: []
+  default_exclude:
+    - 招聘
+    - 游戏攻略
+    - 影视剪辑
+    - 剧情演绎
+privacy:
+  retain_original_author_identifiers: false

@@ -1,0 +1,58 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: monitor
+      POSTGRES_USER: monitor
+      POSTGRES_PASSWORD: monitor
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U monitor"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+  mock-detector:
+    build: .
+    command: uvicorn examples.mock_detector:app --host 0.0.0.0 --port 8080
+  mock-douyin:
+    build: .
+    environment: {MOCK_PLATFORM: douyin}
+    command: uvicorn examples.mock_connector:app --host 0.0.0.0 --port 9001
+  mock-kuaishou:
+    build: .
+    environment: {MOCK_PLATFORM: kuaishou}
+    command: uvicorn examples.mock_connector:app --host 0.0.0.0 --port 9002
+  api:
+    build: .
+    environment:
+      DATABASE_URL: postgresql+psycopg://monitor:monitor@db:5432/monitor
+      DOUYIN_CONNECTOR_URL: http://mock-douyin:9001
+      KUAISHOU_CONNECTOR_URL: http://mock-kuaishou:9002
+      DEMO_PROVIDER_ENABLED: "true"
+      DETECTOR_ENABLED: "true"
+      DETECTOR_BASE_URL: http://mock-detector:8080
+      STORAGE_ROOT: /app/data/storage
+    ports: ["18101:18101"]
+    volumes: ["./data:/app/data"]
+    depends_on:
+      db: {condition: service_healthy}
+      mock-detector: {condition: service_started}
+      mock-douyin: {condition: service_started}
+      mock-kuaishou: {condition: service_started}
+    command: sh -c "python scripts/bootstrap.py && uvicorn app.main:app --host 0.0.0.0 --port 18101"
+  worker:
+    build: .
+    environment:
+      DATABASE_URL: postgresql+psycopg://monitor:monitor@db:5432/monitor
+      DOUYIN_CONNECTOR_URL: http://mock-douyin:9001
+      KUAISHOU_CONNECTOR_URL: http://mock-kuaishou:9002
+      DEMO_PROVIDER_ENABLED: "true"
+      DETECTOR_ENABLED: "true"
+      DETECTOR_BASE_URL: http://mock-detector:8080
+      STORAGE_ROOT: /app/data/storage
+    volumes: ["./data:/app/data"]
+    depends_on:
+      db: {condition: service_healthy}
+      mock-detector: {condition: service_started}
+      mock-douyin: {condition: service_started}
+      mock-kuaishou: {condition: service_started}
+    command: python -m app.worker

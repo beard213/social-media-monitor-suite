@@ -1,0 +1,19 @@
+regions:
+  - id: nationwide
+    name: 全国
+    aliases: []
+  - id: xiongan
+    name: 雄安新区
+    aliases: [雄安, 雄安新区, 容城, 容城县, 安新, 安新县, 雄县, 启动区, 起步区]
+  - id: beijing
+    name: 北京市
+    aliases: [北京, 北京市]
+  - id: tianjin
+    name: 天津市
+    aliases: [天津, 天津市]
+  - id: hebei
+    name: 河北省
+    aliases: [河北, 河北省, 石家庄, 保定, 廊坊, 沧州, 唐山, 邯郸, 邢台, 衡水, 张家口, 承德, 秦皇岛]
+  - id: custom
+    name: 自定义区域
+    aliases: []

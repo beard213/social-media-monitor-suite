@@ -1,0 +1,4 @@
+# 可选：需要本地 FunASR 时安装
+funasr
+modelscope
+torch

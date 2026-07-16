@@ -1,0 +1,41 @@
+templates:
+  - id: central_enterprise_wage
+    name: 央企项目欠薪与劳动权益
+    description: 央企及其项目链条中的工资拖欠、工程款、劳动争议等公开事件内容
+    include_keywords: [央企讨薪, 央企欠薪, 讨薪, 欠薪, 拖欠工资, 工资未发, 工程款, 劳动争议]
+    exclude_keywords: [招聘, 游戏, 影视剪辑, 剧情演绎, 法律营销]
+  - id: public_appeals
+    name: 信访诉求与群体性事件
+    description: 公开上访、信访、投诉、集中诉求、现场聚集等事件级内容
+    include_keywords: [上访, 信访, 公开诉求, 集中反映, 投诉, 现场聚集, 情况反映, 维权]
+    exclude_keywords: [法律广告, 招聘, 影视剪辑, 剧情演绎]
+  - id: xiongan_public_topics
+    name: 雄安新区建设与争议话题
+    description: 雄安相关建设、搬迁安置、民生、公共服务和公开不满表达
+    include_keywords: [雄安, 雄安新区, 容城, 安新, 雄县, 对雄安不满, 新区建设, 搬迁安置, 回迁]
+    exclude_keywords: [房产中介, 售楼广告, 招聘, 旅游推广]
+  - id: campus_public_risk
+    name: 校园群体异常公开内容
+    description: 校园安全、极端公开言论、暴力威胁、群体性争议和异常传播线索；仅作内容级预警并需人工复核
+    include_keywords: [校园欺凌, 校园暴力, 学生安全, 校园诈骗, 暴力威胁, 极端言论, 学生群体, 军校学生]
+    exclude_keywords: [影视剪辑, 剧情演绎, 游戏攻略, 正常课程]
+  - id: organized_influence
+    name: 组织化信息操纵与境外关联线索
+    description: 公开内容中的组织化传播、恶意关联、境外账号协同和虚假信息线索，不自动推断个人政治属性
+    include_keywords: [境外势力, 敌对势力, 境外账号, 组织化传播, 恶意关联, 煽动对立, 虚假信息, 舆论操纵]
+    exclude_keywords: [新闻引用, 学术讨论, 影视剧情, 历史资料]
+  - id: sensitive_facility
+    name: 军校周边与敏感设施违规拍摄
+    description: 军事院校、禁区、敏感设施周边的公开偷拍、无人机航拍和违规拍摄线索
+    include_keywords: [军校周边, 军校偷拍, 禁区拍摄, 偷拍, 无人机航拍, 敏感设施, 军事设施]
+    exclude_keywords: [摄影教程, 影视片段, 合法公开宣传片, 新闻报道]
+  - id: fraud_marketing
+    name: 诈骗与营销导流
+    description: 私信导流、联系方式营销、虚假咨询与诈骗内容
+    include_keywords: [免费咨询, 点击头像, 加微信, 全国接单, 成功后收费, 私信办理]
+    exclude_keywords: []
+  - id: custom
+    name: 自定义主题
+    description: 由用户自行配置关注词与排除词
+    include_keywords: []
+    exclude_keywords: []

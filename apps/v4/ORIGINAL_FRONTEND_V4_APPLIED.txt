@@ -1,0 +1,5 @@
+Applied at: 2026-07-15T20:43:43+08:00
+Patch: original-design-backend-integration-v4
+Original design source: AI安全治理平台设计(4).zip
+Backup: /data4/home/minghuazhao/social-media-monitor-trace-system-v4/backup_before_original_frontend_v4_20260715_204343
+Backend files changed: no

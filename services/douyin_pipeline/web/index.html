@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>抖音直播采集管理</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+<div class="container">
+
+    <h1>抖音直播采集管理</h1>
+
+    <div class="panel">
+        <h2>系统状态</h2>
+        <div class="status-row">
+            <span>主播监控：</span>
+            <b id="monitorStatus">加载中</b>
+        </div>
+        <div class="status-row">
+            <span>直播采集：</span>
+            <b id="pipelineStatus">加载中</b>
+        </div>
+        <div class="status-row">
+            <span>内容检测：</span>
+            <b id="auditStatus">加载中</b>
+        </div>
+    </div>
+
+    <div class="panel">
+        <h2>任务控制</h2>
+
+        <div class="form-line">
+            <label>测试轮数</label>
+            <input id="maxRounds" value="2">
+            <label>并发数</label>
+            <input id="maxWorkers" value="2">
+        </div>
+
+        <div class="form-line">
+            <label>
+                <input type="checkbox" id="cleanOutput">
+                启动前清理 output
+            </label>
+            <label>
+                <input type="checkbox" id="cleanLogs">
+                启动前清理 logs
+            </label>
+        </div>
+
+        <div class="btn-row">
+            <button onclick="startMonitor()">启动主播监控</button>
+            <button onclick="stopMonitor()" class="gray">停止主播监控</button>
+            <button onclick="startPipeline()">启动采集</button>
+            <button onclick="stopPipeline()" class="red">停止采集</button>
+            <button onclick="startAudit()">启动检测</button>
+            <button onclick="stopAudit()" class="red">停止检测</button>
+            <button onclick="startFull()">启动完整流程</button>
+            <button onclick="stopFull()" class="red">停止完整流程</button>
+            <button onclick="loadAll()" class="gray">刷新</button>
+        </div>
+
+        <p class="note">
+            说明：测试时建议轮数填 2；正式持续运行时填 0。
+        </p>
+    </div>
+
+    <div class="panel">
+        <h2>添加主播监控</h2>
+
+        <div class="form-line">
+            <label>主播名称</label>
+            <input id="name" placeholder="例如：财经主播A">
+
+            <label>主播 UID</label>
+            <input id="uid" placeholder="主播用户ID">
+        </div>
+
+        <div class="form-line">
+            <label>测试直播间ID</label>
+            <input id="mockRoomId" placeholder="可选，例如：959147796723">
+            <button onclick="addUser()">添加</button>
+        </div>
+
+        <p class="note">
+            当前演示阶段可以填写“测试直播间ID”模拟该主播正在直播；真实接口接入后，将由 UID 自动检测直播间。
+        </p>
+    </div>
+
+    <div class="panel">
+        <h2>主播监控列表</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>名称</th>
+                    <th>UID</th>
+                    <th>启用</th>
+                    <th>状态</th>
+                    <th>直播间ID</th>
+                    <th>最近检测</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="usersBody"></tbody>
+        </table>
+    </div>
+
+    <div class="panel">
+        <h2>当前采集源 live_sources.txt</h2>
+        <pre id="sourceList">加载中...</pre>
+    </div>
+
+    <div class="panel">
+        <h2>采集结果统计</h2>
+        <pre id="outputStats">加载中...</pre>
+    </div>
+
+    <div class="panel">
+        <h2>有害内容检测结果</h2>
+        <div class="btn-row">
+            <button onclick="loadAuditResults()" class="gray">刷新检测结果</button>
+            <button onclick="loadAuditLog()" class="gray">查看检测日志</button>
+        </div>
+        <pre id="auditResults">暂无检测结果</pre>
+    </div>
+
+    <div class="panel">
+        <h2>运行日志</h2>
+        <div class="btn-row">
+            <button onclick="loadLog('monitor')" class="gray">查看主播监控日志</button>
+            <button onclick="loadLog('pipeline')" class="gray">查看采集程序日志</button>
+        </div>
+        <pre id="logBox">点击上方按钮查看日志。</pre>
+    </div>
+
+</div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+yt-dlp
+requests
+# 语音转写二选一；不转写可不装下面这些
+funasr
+modelscope
+faster-whisper
